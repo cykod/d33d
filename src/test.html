@@ -1,0 +1,113 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - materials</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+.chart rect {
+   stroke: white;
+   fill: steelblue;
+ }
+
+ .chart .bar {
+   fill: white;
+  }
+      
+		</style>
+    <style type='tss'>
+      /* @ is a texture */
+      @moon {
+        url: "three.js/examples/textures/lava/lavatile.jpg";
+        repeat: 4 2;
+        wrapS: RepeatWrapping;
+        wrapT: RepeatWrapping;
+        anisotropy: 16;
+      }
+
+      /* % is a geometry */
+      %sphere {
+        type: Sphere;
+        radius: 10;
+        segments: 5;
+        rings: 5;
+      }
+
+      /* . indicates a material */
+      .line {
+        type: LineBasic;
+        color: #ffffff;
+        opacity: 0.2;
+        map: @moon;
+        bumpMap: @moon;
+      }
+
+      /* no prefix is a mesh or object */
+      line {
+        geometry: sphere;
+        material: .line;
+      }
+
+
+    </style>
+	</head>
+	<body>
+
+		<script src="three.js/build/Three.js"></script>
+
+		<script src="three.js/examples/js/Detector.js"></script>
+		<script src="three.js/examples/js/RequestAnimationFrame.js"></script>
+    <script src="three.js/examples/js/Stats.js"></script>
+
+    <script src='d3/d3.v2.js'></script>
+
+    <script src='tss.js'></script>
+    <script src='d33d.js'></script>
+
+    <div class='content'>
+
+    </div>
+
+		<script>
+      tss.init();
+
+      var d33d = new D33D();
+
+var data = [4, 8, 15, 16, 23, 42];
+
+ var x = d3.scale.linear()
+     .domain([0, d3.max(data)])
+     .range([0, 420]);
+
+
+var y = d3.scale.ordinal()
+     .domain(data)
+     .rangeBands([0, 120]);
+
+
+var chart = d3.select(".content").append(d33d)
+    .attr("width", 440)
+    .attr("height", 140)
+  .append("group")
+    .attr("x",10)
+    .attr("y",15);
+
+chart.selectAll("#rect")
+    .data(data)
+  .enter().append("#rect")
+    .attr("y", y)
+    .attr("sx", x)
+    .attr("sy", y.rangeBand());
+
+		</script>
+
+	</body>
+</html>
+

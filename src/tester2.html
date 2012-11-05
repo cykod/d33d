@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
+  <script src="./three.js/build/three.js"></script>
+  <script src='tss.js'></script>
+</head>
+<body>
+
+  <style type='tss' id='myStyle'>
+      /* @ is a texture */
+      @moon {
+        url: "three.js/examples/textures/lava/lavatile.jpg";
+        repeat: 4 2;
+        wrapS: RepeatWrapping;
+        wrapT: RepeatWrapping;
+        anisotropy: 16;
+      }
+
+      /* % prefix is a geometry */
+      %sphere {
+        type: Sphere;
+        radius: 10;
+        segments: 5;
+        rings: 5;
+      }
+
+      /* . indicates a material */
+      .line {
+        type: LineBasic;
+        color: #ffffff;
+        opacity: 0.2;
+        map: @moon;
+        bumpMap: @moon;
+      }
+
+      /* no prefix is a mesh */
+      line {
+        geometry: #sphere;
+        material: .line;
+      }
+
+  </style>
+  <script>
+    tss.init();
+  </script>
+
+</body>
+</html>
