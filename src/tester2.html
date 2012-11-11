@@ -6,45 +6,95 @@
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
   <script src="./three.js/build/three.js"></script>
   <script src='tss.js'></script>
+
+  <style>
+	  body { background-color:black; }
+  </style>
 </head>
 <body>
 
   <style type='tss' id='myStyle'>
       /* @ is a texture */
-      @moon {
+      @lavatile {
         url: "three.js/examples/textures/lava/lavatile.jpg";
-        repeat: 4 2;
+        repeat: 4 4;
         wrapS: RepeatWrapping;
         wrapT: RepeatWrapping;
         anisotropy: 16;
       }
 
+      @moon { 
+	url: "three.js/examples/textures/planets/moon_1024.jpg";
+        anisotropy: 16;
+     }
+
       /* % prefix is a geometry */
       %sphere {
         type: Sphere;
-        radius: 10;
-        segments: 5;
-        rings: 5;
+        radius: 100;
+        segments: 20;
+        rings: 15;
       }
 
       /* . indicates a material */
-      .line {
-        type: LineBasic;
-        color: #ffffff;
-        opacity: 0.2;
-        map: @moon;
-        bumpMap: @moon;
+      .moon {
+       type: MeshPhong;
+       /* color: #ff0000; */
+       ambient: 0x030303; 
+       opacity: 0.8;
+       transparent: true;
+       map: @moon; 
+       bumpMap: @moon;
+      }
+
+      .lava {
+        type: MeshPhong;
+       /* color: #ff0000; */
+	ambient: 0x030303;  
+       map: @lavatile; 
+       bumpMap: @lavatile;
       }
 
       /* no prefix is a mesh */
-      line {
-        geometry: #sphere;
-        material: .line;
+      moon {
+        geometry: %sphere;
+	material: .moon;
+      }
+
+      lava {
+	geometry: %sphere;
+	material: .lava;
+	position: -400 0 0;
       }
 
   </style>
   <script>
     tss.init();
+
+    tss.bootstrap();
+
+    tss.light();
+
+    var t = tss("moon")();
+    tss.scene.add(t);
+
+    var t2 = tss("lava")();
+    tss.scene.add(t2);
+
+    var timer = 0;
+
+    tss.loop(function(dt) {
+	timer += dt;
+
+	tss.camera.position.x = Math.cos( timer ) * 1000;
+	tss.camera.position.y = 200;
+	tss.camera.position.z = Math.sin( timer ) * 1000;
+
+	tss.camera.lookAt( tss.scene.position );
+
+        t.rotation.y += dt
+	t2.rotation.y -= 2*dt;
+    });
   </script>
 
 </body>
