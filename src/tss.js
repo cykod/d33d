@@ -283,13 +283,17 @@
     };
 
     tss.light = function() {
-      var l = new THREE.DirectionalLight(0xffffff, 0.125 );
-
+      tss.lights = tss.lights || [];
       var light = new THREE.DirectionalLight( 0xffffff );
       light.position.set( 1, 1, 0 );
       tss.scene.add( light );
 
-      tss.scene.add( new THREE.AmbientLight( 0x404040 ) );
+      tss.lights.push(light);
+
+      var ambient = new THREE.AmbientLight( 0x404040 );
+
+      tss.scene.add(ambient);
+      tss.lights.push(ambient);
     };
 
 

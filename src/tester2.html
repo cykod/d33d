@@ -64,7 +64,7 @@
       lava {
 	geometry: %sphere;
 	material: .lava;
-	position: -400 0 0;
+	position: -300 0 0;
       }
 
   </style>
@@ -87,10 +87,10 @@
 	timer += dt;
 
 	tss.camera.position.x = Math.cos( timer ) * 1000;
-	tss.camera.position.y = 200;
+	tss.camera.position.y = Math.sin(timer/2) * 1000;
 	tss.camera.position.z = Math.sin( timer ) * 1000;
 
-	tss.camera.lookAt( tss.scene.position );
+	tss.camera.lookAt( t2.position); //tss.scene.position );
 
         t.rotation.y += dt
 	t2.rotation.y -= 2*dt;
